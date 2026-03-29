@@ -1,0 +1,79 @@
+spring.application.name=workspace_service
+
+# ======================================================
+# SERVER CONFIG
+# ======================================================
+server.port=3002
+spring.mvc.servlet.path=/api/v1
+
+# ======================================================
+# DATABASE CONFIG (PostgreSQL)
+# ======================================================
+spring.datasource.url=jdbc:postgresql://localhost:5432/slack_workspace
+spring.datasource.username=postgres
+spring.datasource.password=your_password_here
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+# JPA/Hibernate
+spring.jpa.hibernate.ddl-auto=update
+spring.jpa.show-sql=false
+spring.jpa.properties.hibernate.format_sql=false
+
+# ======================================================
+# LOGGING
+# ======================================================
+logging.level.org.hibernate.SQL=WARN
+logging.level.org.hibernate.orm.jdbc.warn=ERROR
+logging.level.org.springframework.transaction=WARN
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=WARN
+logging.level.root=INFO
+logging.pattern.level="%5p [${spring.application.name:},%X{traceId:-},%X{spanId:-}]"
+
+# ======================================================
+# SWAGGER (OPENAPI)
+# ======================================================
+springdoc.api-docs.path=/v3/api-docs
+springdoc.swagger-ui.path=/swagger-ui.html
+springdoc.swagger-ui.operations-sorter=method
+springdoc.swagger-ui.tags-sorter=alpha
+springdoc.swagger-ui.enabled=true
+
+# ======================================================
+# EMAIL (SMTP GMAIL)
+# Lấy App Password tại: Google Account > Security > App Passwords
+# ======================================================
+spring.mail.host=smtp.gmail.com
+spring.mail.port=587
+spring.mail.username=your-email@gmail.com
+spring.mail.password=your-gmail-app-password
+spring.mail.properties.mail.smtp.auth=true
+spring.mail.properties.mail.smtp.starttls.enable=true
+spring.mail.properties.mail.smtp.connectiontimeout=5000
+spring.mail.properties.mail.smtp.timeout=3000
+spring.mail.properties.mail.smtp.writetimeout=5000
+
+# ======================================================
+# REDIS
+# ======================================================
+spring.data.redis.host=localhost
+spring.data.redis.port=6379
+
+# ======================================================
+# gRPC CLIENT (Identity Service)
+# ======================================================
+grpc.client.user-service.address=static://localhost:9090
+grpc.client.user-service.negotiation-type=plaintext
+
+# ======================================================
+# KAFKA
+# ======================================================
+spring.kafka.bootstrap-servers=localhost:9092
+spring.kafka.producer.key-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.value-serializer=org.apache.kafka.common.serialization.StringSerializer
+spring.kafka.producer.retries=3
+
+# ======================================================
+# PROFILE
+# ======================================================
+spring.profiles.active=dev
+spring.output.ansi.enabled=ALWAYS

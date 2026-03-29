@@ -1,0 +1,125 @@
+# ============================================================
+#  SLACK CLONE — Root .gitignore
+#  Covers: NestJS, Spring Boot, .NET, Go, Flutter
+# ============================================================
+
+# ─── ENVIRONMENT & SECRETS (NEVER COMMIT!) ─────────────────
+.env
+.env.local
+.env.*.local
+!.env.example
+
+# ─── SPRING BOOT CONFIG (chứa DB password, SMTP password) ──
+**/src/main/resources/application.properties
+**/src/main/resources/application.yml
+**/src/main/resources/application-*.properties
+**/src/main/resources/application-*.yml
+!**/src/main/resources/application.properties.example
+!**/src/main/resources/application.yml.example
+
+# ─── .NET CONFIG (chứa DB connection string, JWT secret) ───
+appsettings.json
+appsettings.*.json
+!appsettings.example.json
+!appsettings.Development.json
+
+# ─── NODE.JS / NESTJS ──────────────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+dist/
+.cache/
+.npm/
+
+# ─── JAVA / SPRING BOOT (MAVEN) ────────────────────────────
+target/
+*.class
+*.jar
+*.war
+*.ear
+*.nar
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+# ─── .NET / C# ─────────────────────────────────────────────
+bin/
+obj/
+*.user
+*.suo
+.vs/
+*.DotSettings.user
+[Pp]ublish/
+[Rr]elease/
+[Dd]ebug/
+*.nupkg
+*.snupkg
+project.lock.json
+artifacts/
+
+# ─── GO ────────────────────────────────────────────────────
+# Compiled binary
+realtime-service(golang)/realtime-service
+realtime-service(golang)/*.exe
+
+# ─── FLUTTER / DART ────────────────────────────────────────
+front_end/.dart_tool/
+front_end/build/
+front_end/.flutter-plugins
+front_end/.flutter-plugins-dependencies
+front_end/*.iml
+front_end/android/.gradle/
+front_end/android/app/debug/
+front_end/android/app/profile/
+front_end/android/app/release/
+front_end/android/local.properties
+front_end/android/key.properties
+front_end/ios/Pods/
+front_end/ios/.symlinks/
+front_end/ios/Flutter/Flutter.framework
+front_end/ios/Flutter/Flutter.podspec
+front_end/ios/Generated.xcconfig
+front_end/macos/Pods/
+front_end/linux/flutter/generated_plugin_registrant.cc
+front_end/linux/flutter/generated_plugin_registrant.h
+front_end/linux/flutter/generated_plugins.cmake
+front_end/windows/flutter/generated_plugin_registrant.cc
+front_end/windows/flutter/generated_plugin_registrant.h
+front_end/windows/flutter/generated_plugins.cmake
+*.iml
+
+# ─── IDE & EDITOR ──────────────────────────────────────────
+.idea/
+.vscode/
+*.swp
+*.swo
+*.swn
+*.orig
+.project
+.classpath
+.settings/
+
+# ─── OS FILES ──────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ─── LOGS ──────────────────────────────────────────────────
+logs/
+*.log
+
+# ─── DOCKER ────────────────────────────────────────────────
+# Uncomment nếu bạn không muốn track docker volumes
+# docker-data/
+
+# ─── MISC ──────────────────────────────────────────────────
+*.bak
+*.tmp
+*.temp

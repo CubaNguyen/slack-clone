@@ -1,0 +1,67 @@
+version: "3.8"
+
+services:
+  # --- 1. Redis ---
+  redis:
+    image: redis:alpine
+    container_name: workspace_redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - microservices-net
+
+  # --- 2. Zookeeper (Dùng bản 7.6.1) ---
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.6.1 # <--- ĐÃ SỬA: Không dùng latest
+    container_name: chat_zookeeper
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    networks:
+      - microservices-net
+
+  # --- 3. Kafka (Dùng bản 7.6.1) ---
+  kafka:
+    image: confluentinc/cp-kafka:7.6.1 # <--- ĐÃ SỬA: Không dùng latest
+    container_name: chat_kafka
+    depends_on:
+      - zookeeper
+    ports:
+      - "9092:9092"
+    environment:
+      KAFKA_BROKER_ID: 1
+      # Lưu ý: trỏ đúng vào tên container "chat_zookeeper" cho chắc chắn
+      KAFKA_ZOOKEEPER_CONNECT: chat_zookeeper:2181
+
+      # Cấu hình Listeners
+      # chat_kafka:29092 là tên container, giúp các service nội bộ (như Kafdrop) gọi được
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092,PLAINTEXT_INTERNAL://chat_kafka:29092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_INTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT_INTERNAL
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+    networks:
+      - microservices-net
+
+  # --- 4. Kafdrop ---
+  kafdrop:
+    image: obsidiandynamics/kafdrop
+    container_name: chat_kafdrop
+    restart: "no"
+    ports:
+      - "9000:9000"
+    environment:
+      # Sửa lại connect string cho khớp tên container kafka
+      KAFKA_BROKERCONNECT: "chat_kafka:29092"
+    depends_on:
+      - kafka
+    networks:
+      - microservices-net
+
+volumes:
+  redis_data:
+
+networks:
+  microservices-net:
+    driver: bridge

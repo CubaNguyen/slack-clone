@@ -1,0 +1,20 @@
+syntax = "proto3";
+
+package com.project.user.grpc;
+
+option java_multiple_files = true;
+option java_package = "com.project.user.grpc";
+
+service UserService {
+  rpc GetUserForInvite (GetUserForInviteRequest)
+      returns (UserInviteInfo);
+}
+
+message GetUserForInviteRequest {
+  string email = 1;
+}
+
+message UserInviteInfo {
+  string id = 1;
+  string email = 2;
+}
